@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+
+import hero from '../assets/hero.png';
 ---
 
 <header class="header">
@@ -8,10 +11,282 @@
         Niigata Halal Food And Restaurant
       </a>
     </h1>
+    <button class="hamburger-btn" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobile-navigation">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+    <nav class="header-navigation" aria-label="メインナビゲーション">
+      <ul class="header-nav-list">
+        <li class="header-nav-item">
+          <a href="#menu" class="header-nav-link">MENU</a>
+        </li>
+        <li class="header-nav-item">
+          <a href="#info" class="header-nav-link">INFO</a>
+        </li>
+        <li class="header-nav-item">
+          <a href="#access" class="header-nav-link">ACCESS</a>
+        </li>
+        <li class="header-nav-item">
+          <a href="#contact" class="header-nav-link">CONTACT</a>
+        </li>
+      </ul>
+    </nav>
   </div>
+  <nav class="mobile-navigation" id="mobile-navigation" aria-label="モバイルナビゲーション" aria-hidden="true">
+    <ul class="mobile-nav-list">
+      <li class="mobile-nav-item">
+        <a href="#menu" class="mobile-nav-link">MENU</a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="#info" class="mobile-nav-link">INFO</a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="#access" class="mobile-nav-link">ACCESS</a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="#contact" class="mobile-nav-link">CONTACT</a>
+      </li>
+    </ul>
+  </nav>
 </header>
+
+<section class="hero">
+  <div class="hero-image-wrap">
+    <Image class="hero-img" src={hero} alt="" />
+  </div>
+</section>
+
+<script>
+  const header = document.querySelector('.header');
+  const hamburgerBtn = document.querySelector('.hamburger-btn');
+  const mobileNav = document.querySelector('.mobile-navigation');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+  const breakpoint = 1024;
+
+  function closeMenu() {
+    header?.classList.remove('is-menu-open');
+    hamburgerBtn?.setAttribute('aria-expanded', 'false');
+    hamburgerBtn?.setAttribute('aria-label', 'メニューを開く');
+    mobileNav?.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('is-menu-open');
+  }
+
+  function openMenu() {
+    header?.classList.add('is-menu-open');
+    hamburgerBtn?.setAttribute('aria-expanded', 'true');
+    hamburgerBtn?.setAttribute('aria-label', 'メニューを閉じる');
+    mobileNav?.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('is-menu-open');
+  }
+
+  hamburgerBtn?.addEventListener('click', () => {
+    const isOpen = header?.classList.contains('is-menu-open');
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  mobileLinks.forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > breakpoint) {
+      closeMenu();
+    }
+  });
+</script>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
+
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: $color-primary;
+    color: $color-white;
+    z-index: 100;
+    transition: background-color $transition-base;
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20.0px;
+    width: 95.5%;
+  }
+
+  .header-logo {
+    max-width: 500.0px;
+    width: 100%;
+  }
+
+  .header-logo-link {
+    display: block;
+    font-size: clamp(1.4rem, 2vw, 2.5rem);
+    letter-spacing: 0.2em;
+    transition: opacity $transition-fast, letter-spacing $transition-fast;
+
+    &:hover {
+      opacity: 0.8;
+      letter-spacing: 0.25em;
+    }
+  }
+
+  .hamburger-btn {
+    display: none;
+    position: relative;
+    width: 40.0px;
+    height: 24.0px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 110;
+    padding-top: 0;
+    padding-left: 0;
+  }
+
+  .hamburger-line {
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2.0px;
+    background-color: $color-white;
+    transition: transform $transition-fast, top $transition-fast;
+  }
+
+  .hamburger-line:first-child {
+    top: 4.0px;
+  }
+
+  .hamburger-line:last-child {
+    top: 18.0px;
+  }
+
+  .is-menu-open .hamburger-line:first-child {
+    top: 11.0px;
+    transform: rotate(20deg);
+  }
+
+  .is-menu-open .hamburger-line:last-child {
+    top: 11.0px;
+    transform: rotate(-20deg);
+  }
+
+  .header-navigation {
+    @include desktop {
+      display: block;
+    }
+
+    @include mobile {
+      display: none;
+    }
+  }
+
+  .header-nav-list {
+    display: flex;
+    gap: 50.0px;
+    letter-spacing: 0.3em;
+  }
+
+  .header-nav-link {
+    @include link-underline;
+    font-size: clamp(1.2rem, 1.5vw, 1.6rem);
+    transition: color $transition-fast, opacity $transition-fast;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+
+  .mobile-navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    background-color: rgba($color-primary, 0.97);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 105;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity $transition-base, visibility $transition-base;
+
+    @include desktop {
+      display: none;
+    }
+  }
+
+  .is-menu-open .mobile-navigation {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .mobile-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40.0px;
+    align-items: center;
+  }
+
+  .mobile-nav-link {
+    font-size: 2.4rem;
+    letter-spacing: 0.3em;
+    color: $color-white;
+    transition: color $transition-fast, transform $transition-fast, letter-spacing $transition-fast;
+
+    &:hover {
+      color: $color-accent;
+      transform: scale(1.05);
+      letter-spacing: 0.4em;
+    }
+  }
+
+  @include mobile {
+    .hamburger-btn {
+      display: block;
+    }
+  }
+
+  body.is-menu-open {
+    overflow: hidden;
+  }
+
+  .hero {
+    position: relative;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .hero-image-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    :global(img),
+    :global(picture) {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: hero-zoom 2.0s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
 </style>

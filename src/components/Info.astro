@@ -1,24 +1,57 @@
 ---
-import { Image } from 'astro:assets';
-import { Icon } from 'astro-icon/components'
+const infoItems = [
+  { label: '店舗名', value: 'Niigata Halal Food And Restaurant' },
+  { label: '電話番号', value: '070-2797-1885', href: 'tel:07027971885' },
+  { label: '住所', value: '〒950-0916 新潟市中央区米山4-21-18' },
+  {
+    label: '営業時間（平日）',
+    isHours: true,
+    lunch: 'ランチ：11:00～15:00',
+    dinner: 'ディナー：17:00～22:00',
+  },
+  {
+    label: '営業時間（土日祝）',
+    isHours: true,
+    lunch: 'ランチ：11:00～15:00',
+    dinner: 'ディナー：17:00～22:30',
+  },
+  { label: '定休日', value: '火曜日' },
+  { label: '席数', value: '26' },
+];
 ---
 
-<section class="section">
+<section class="section info-section" id="info">
   <div class="section-inner">
-    <div class="section-title">
-      <h2 class="title">Infomation</h2>
+    <div class="section-title fade-in">
+      <h2 class="title">INFO</h2>
     </div>
-    <div class="content">
-      店舗名：Niigata Halal Food And Restaurant
-      電話番号：070-2797-1885
-      住所：〒950-0916 新潟市中央区米山4-21-18
-      営業時間（平日）：   ランチ：11:00～15:00 ディナー：17:00～22:00
-      営業時間（土日祝）：    ランチ：11:00～15:00 ディナー：17:00～22:30
-      定休日：火曜日
-      席数：26
-    </div>
-    <div class="map-wrap">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3147.99678674306!2d139.05755109999998!3d37.9071378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5ff4c99f350afe85%3A0x1f0b2fcc922f236a!2z44CSOTUwLTA5MTYg5paw5r2f55yM5paw5r2f5biC5Lit5aSu5Yy657Gz5bGx77yU5LiB55uu77yS77yR4oiS77yR77yYIOa4oei-uuODk-ODqw!5e0!3m2!1sja!2sjp!4v1783482855992!5m2!1sja!2sjp" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <dl class="info-list">
+      {infoItems.map((item, index) => (
+        <div class={`info-item fade-in fade-in-delay-${Math.min(index + 1, 4)}`}>
+          <dt class="info-label">{item.label}</dt>
+          <dd class="info-value">
+            {item.href ? (
+              <a href={item.href} class="info-link">{item.value}</a>
+            ) : item.isHours ? (
+              <span class="info-hours">
+                <span class="info-hours-lunch">{item.lunch}</span>
+                <span class="info-hours-dinner">{item.dinner}</span>
+              </span>
+            ) : (
+              item.value
+            )}
+          </dd>
+        </div>
+      ))}
+    </dl>
+    <div class="map-wrap fade-in fade-in-delay-4" id="access">
+      <iframe
+        class="map-iframe"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3147.99678674306!2d139.05755109999998!3d37.9071378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5ff4c99f350afe85%3A0x1f0b2fcc922f236a!2z44CSOTUwLTA5MTYg5paw5r2f55yM5paw5r2f5biC5Lit5aSu5Yy657Gz5bGx77yU5LiB55uu77yS77yR4oiS77yR77yYIOa4oei-uuODk-ODqw!5e0!3m2!1sja!2sjp!4v1783482855992!5m2!1sja!2sjp"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        title="Niigata Halal Food And Restaurant 地図"
+      ></iframe>
     </div>
   </div>
 </section>
@@ -26,4 +59,105 @@ import { Icon } from 'astro-icon/components'
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
+
+  .info-section {
+    background-color: $color-white;
+  }
+
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24.0px;
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8.0px;
+    padding-top: 20.0px;
+    padding-left: 20.0px;
+    border-left: 3.0px solid $color-primary;
+    transition: border-color $transition-fast, transform $transition-fast;
+
+    &:hover {
+      border-color: $color-accent;
+      transform: translateX(4.0px);
+    }
+  }
+
+  .info-label {
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
+    letter-spacing: 0.15em;
+    color: $color-primary;
+  }
+
+  .info-value {
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+  }
+
+  .info-link {
+    @include link-underline;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+
+  .info-hours {
+    display: inline;
+  }
+
+  .info-hours-lunch,
+  .info-hours-dinner {
+    display: inline;
+  }
+
+  .info-hours-dinner {
+    padding-left: 1.0em;
+  }
+
+  @media (max-width: 581px) {
+    .info-hours {
+      display: flex;
+      flex-direction: column;
+      gap: 4.0px;
+    }
+
+    .info-hours-dinner {
+      padding-left: 0;
+    }
+  }
+
+  .map-wrap {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 4.0px;
+    transition: box-shadow $transition-fast, transform $transition-fast;
+
+    &:hover {
+      box-shadow: 0 8.0px 24.0px rgba($color-primary, 0.15);
+      transform: translateY(-4.0px);
+    }
+  }
+
+  .map-iframe {
+    width: 100%;
+    height: 400.0px;
+    border: none;
+    display: block;
+  }
+
+  @include mobile {
+    .info-item {
+      padding-top: 16.0px;
+      padding-left: 16.0px;
+    }
+
+    .map-iframe {
+      height: 280.0px;
+    }
+  }
 </style>

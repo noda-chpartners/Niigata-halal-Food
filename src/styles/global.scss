@@ -1,29 +1,121 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
 }
 
 body {
+  font-family: "Contrail One", sans-serif;
   overflow-x: clip;
+  color: $color-text;
+  background-color: $color-text-light;
 }
 
 a {
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 }
 
 img {
+  display: block;
   max-width: 100%;
   height: auto;
   object-fit: cover;
 }
 
-.header,
-.footer {
+.header {
   width: 100%;
+  padding: 20px 4.5%;
 }
 
-.header,
 .footer,
 .section {
+  width: 100%;
   padding: 40px 4.5%;
+}
+
+.section-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 40.0px;
+  max-width: 1200.0px;
+}
+
+.section-title {
+  @include fade-in-up;
+}
+
+.title {
+  font-size: clamp(3.2rem, 5vw, 5.0rem);
+  letter-spacing: 0.3em;
+  color: $color-primary;
+  line-height: 1.2;
+}
+
+.fade-in {
+  @include fade-in-up;
+}
+
+.fade-in-delay-1 {
+  transition-delay: 0.1s;
+}
+
+.fade-in-delay-2 {
+  transition-delay: 0.2s;
+}
+
+.fade-in-delay-3 {
+  transition-delay: 0.3s;
+}
+
+.fade-in-delay-4 {
+  transition-delay: 0.4s;
+}
+
+.fade-in-delay-5 {
+  transition-delay: 0.5s;
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.05);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6.0px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@include mobile {
+  .section {
+    padding-top: 60.0px;
+  }
+
+  .section-inner {
+    gap: 30.0px;
+  }
 }

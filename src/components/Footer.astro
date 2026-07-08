@@ -1,13 +1,120 @@
 ---
+import { Image } from 'astro:assets';
+
+import footerBg from '../assets/footer-bg.png';
 ---
 
 <footer class="footer">
+  <div class="footer-bg-wrap">
+    <Image class="footer-bg" src={footerBg} alt="" />
+  </div>
   <div class="footer-inner">
-    <small class="copyright">&copy; 2026 Niigata Halal Food And Restaurant</small>
+    <a href="/" class="footer-logo fade-in">Niigata Halal Food And Restaurant</a>
+    <nav class="footer-nav fade-in fade-in-delay-1" aria-label="フッターナビゲーション">
+      <ul class="footer-nav-list">
+        <li class="footer-nav-item">
+          <a href="#menu" class="footer-nav-link">MENU</a>
+        </li>
+        <li class="footer-nav-item">
+          <a href="#info" class="footer-nav-link">INFO</a>
+        </li>
+        <li class="footer-nav-item">
+          <a href="#access" class="footer-nav-link">ACCESS</a>
+        </li>
+        <li class="footer-nav-item">
+          <a href="#contact" class="footer-nav-link">CONTACT</a>
+        </li>
+      </ul>
+    </nav>
+    <small class="copyright fade-in fade-in-delay-2">&copy; 2026 Niigata Halal Food And Restaurant</small>
   </div>
 </footer>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
+
+  .footer {
+    position: relative;
+    overflow: hidden;
+    padding-top: 60.0px;
+    min-height: 200.0px;
+  }
+
+  .footer-bg-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+
+    :global(img),
+    :global(picture) {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
+
+  .footer-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .footer-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30.0px;
+    max-width: 1200.0px;
+  }
+
+  .footer-logo {
+    font-size: clamp(1.4rem, 2.5vw, 2.0rem);
+    letter-spacing: 0.15em;
+    color: $color-white;
+    transition: opacity $transition-fast, letter-spacing $transition-fast;
+
+    &:hover {
+      opacity: 0.8;
+      letter-spacing: 0.2em;
+    }
+  }
+
+  .footer-nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30.0px;
+  }
+
+  .footer-nav-link {
+    @include link-underline;
+    font-size: clamp(1.2rem, 1.5vw, 1.4rem);
+    letter-spacing: 0.2em;
+    color: rgba($color-white, 0.85);
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+
+  .copyright {
+    font-size: clamp(1.0rem, 1.5vw, 1.2rem);
+    letter-spacing: 0.05em;
+    color: rgba($color-white, 0.6);
+  }
+
+  @include mobile {
+    .footer-inner {
+      gap: 24.0px;
+    }
+
+    .footer-nav-list {
+      gap: 20.0px;
+    }
+  }
 </style>

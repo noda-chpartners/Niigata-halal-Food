@@ -7,19 +7,20 @@ import item03 from '../assets/item03.png';
 import item04 from '../assets/item04.png';
 import item05 from '../assets/item05.png';
 
+const menuItems = [item01, item02, item03, item04, item05];
 ---
 
-<section class="section">
+<section class="section menu-section" id="menu">
   <div class="section-inner">
-    <div class="section-title">
-      <h2 class="title">Menu</h2>
+    <div class="section-title fade-in">
+      <h2 class="title">MENU</h2>
     </div>
-    <div class="content">
-      <Image src={ item01 } alt="" />
-      <Image src={ item02 } alt="" />
-      <Image src={ item03 } alt="" />
-      <Image src={ item04 } alt="" />
-      <Image src={ item05 } alt="" />
+    <div class="menu-list">
+      {menuItems.map((item, index) => (
+        <div class={`menu-item fade-in fade-in-delay-${index + 1}`}>
+          <Image class="menu-item-img" src={item} alt="" />
+        </div>
+      ))}
     </div>
   </div>
 </section>
@@ -27,4 +28,47 @@ import item05 from '../assets/item05.png';
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
+
+  .section-inner {
+    max-width: 100%;
+  }
+
+  .menu-section {
+    background-color: $color-text-light;
+  }
+
+  .menu-list {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 30.0px;
+  }
+
+  .menu-item {
+    overflow: hidden;
+    border-radius: 4.0px;
+    transition: transform $transition-fast, box-shadow $transition-fast;
+
+    &:hover {
+      transform: translateY(-6.0px);
+      box-shadow: 0 12.0px 32.0px rgba($color-primary, 0.2);
+    }
+  }
+
+  .menu-item:hover .menu-item-img {
+    transform: scale(1.03);
+  }
+
+  .menu-item-img {
+    width: 100%;
+    justify-content: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @include mobile {
+    .menu-list {
+      gap: 20.0px;
+    }
+  }
 </style>

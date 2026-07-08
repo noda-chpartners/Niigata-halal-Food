@@ -1,0 +1,53 @@
+@use 'variables' as *;
+
+@mixin desktop {
+  @media (min-width: #{$breakpoint-lg + 1px}) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin hover-lift {
+  transition: transform $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    transform: translateY(-4.0px);
+    box-shadow: 0 8.0px 24.0px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@mixin link-underline {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -4.0px;
+    left: 0;
+    width: 0;
+    height: 1.0px;
+    background-color: currentColor;
+    transition: width $transition-fast;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+@mixin fade-in-up {
+  opacity: 0;
+  transform: translateY(30.0px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

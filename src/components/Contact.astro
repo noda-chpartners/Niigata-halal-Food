@@ -1,10 +1,24 @@
 ---
+import { Image } from 'astro:assets';
+
+import contactBg from '../assets/contact-bg.png';
 ---
 
-<section class="section">
-  <div class="section-inner">
-    <div class="section-title">
-      <h2 class="title">Contact</h2>
+<section class="section contact-section" id="contact">
+  <div class="contact-bg-wrap">
+    <Image class="contact-bg" src={contactBg} alt="" />
+  </div>
+  <div class="section-inner contact-inner">
+    <div class="section-title fade-in">
+      <h2 class="title contact-title">CONTACT</h2>
+    </div>
+    <div class="contact-content fade-in fade-in-delay-1">
+      <p class="contact-lead">ご予約・お問い合わせはお電話にて承っております。</p>
+      <a href="tel:07027971885" class="contact-phone">
+        <span class="contact-phone-label">TEL</span>
+        <span class="contact-phone-number">070-2797-1885</span>
+      </a>
+      <p class="contact-note">定休日：火曜日</p>
     </div>
   </div>
 </section>
@@ -12,4 +26,105 @@
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
+
+  .contact-section {
+    position: relative;
+    overflow: hidden;
+    padding-top: 100.0px;
+    min-height: 50.0vh;
+  }
+
+  .contact-bg-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+
+    :global(img),
+    :global(picture) {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
+
+  .contact-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .contact-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-title {
+    color: $color-white;
+  }
+
+  .contact-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24.0px;
+    padding-top: 20.0px;
+    padding-left: 20.0px;
+  }
+
+  .contact-lead {
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    letter-spacing: 0.1em;
+    color: $color-white;
+    line-height: 1.8;
+  }
+
+  .contact-phone {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 8.0px;
+    padding-top: 20.0px;
+    padding-left: 24.0px;
+    border-left: 3.0px solid $color-accent;
+    transition: transform $transition-fast, border-color $transition-fast;
+
+    &:hover {
+      transform: translateX(6.0px);
+      border-color: $color-accent-light;
+
+      .contact-phone-number {
+        letter-spacing: 0.15em;
+      }
+    }
+  }
+
+  .contact-phone-label {
+    font-size: 1.2rem;
+    letter-spacing: 0.3em;
+    color: $color-accent;
+  }
+
+  .contact-phone-number {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    letter-spacing: 0.08em;
+    color: $color-white;
+    transition: letter-spacing $transition-fast;
+  }
+
+  .contact-note {
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
+    letter-spacing: 0.1em;
+    color: rgba($color-white, 0.8);
+  }
+
+  @include mobile {
+    .contact-section {
+      padding-top: 80.0px;
+    }
+
+    .contact-content {
+      gap: 20.0px;
+    }
+  }
 </style>
