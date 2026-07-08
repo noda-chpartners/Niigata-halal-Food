@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+
+import item01 from '../assets/item01.png';
+import item02 from '../assets/item02.png';
+import item03 from '../assets/item03.png';
+import item04 from '../assets/item04.png';
+import item05 from '../assets/item05.png';
+
+---
+
+<section class="section">
+  <div class="section-inner">
+    <div class="section-title">
+      <h2 class="title">Menu</h2>
+    </div>
+    <div class="content">
+      <Image src={ item01 } alt="" />
+      <Image src={ item02 } alt="" />
+      <Image src={ item03 } alt="" />
+      <Image src={ item04 } alt="" />
+      <Image src={ item05 } alt="" />
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../styles/variables' as *;
+  @use '../styles/mixins' as *;
+</style>

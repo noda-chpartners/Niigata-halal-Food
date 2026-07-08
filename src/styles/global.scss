@@ -1,0 +1,29 @@
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+}
+
+a {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.header,
+.footer {
+  width: 100%;
+}
+
+.header,
+.footer,
+.section {
+  padding: 40px 4.5%;
+}
