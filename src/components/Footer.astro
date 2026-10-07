@@ -1,7 +1,9 @@
 ---
 import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 
 import footerBg from '../assets/footer-bg.png';
+import { snsLinks } from '../data/sns';
 ---
 
 <footer class="footer">
@@ -26,7 +28,17 @@ import footerBg from '../assets/footer-bg.png';
         </li>
       </ul>
     </nav>
-    <small class="copyright fade-in fade-in-delay-2">&copy; 2026 Niigata Halal Food And Restaurant</small>
+    <ul class="footer-sns fade-in fade-in-delay-2">
+      {snsLinks.map((link) => (
+        <li>
+          <a class="footer-sns-link" href={link.href} target="_blank" rel="noopener noreferrer">
+            <Icon class="footer-sns-icon" name={link.icon} aria-hidden="true" />
+            <span>{link.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <small class="copyright fade-in fade-in-delay-3">&copy; 2026 Niigata Halal Food And Restaurant</small>
   </div>
 </footer>
 
@@ -100,6 +112,33 @@ import footerBg from '../assets/footer-bg.png';
     &:hover {
       color: $color-accent;
     }
+  }
+
+  .footer-sns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24.0px;
+  }
+
+  .footer-sns-link {
+    @include link-underline;
+    display: inline-flex;
+    align-items: center;
+    gap: 10.0px;
+    font-size: clamp(1.2rem, 1.5vw, 1.4rem);
+    letter-spacing: 0.15em;
+    color: rgba($color-white, 0.85);
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+
+  .footer-sns-icon {
+    width: 22.0px;
+    height: 22.0px;
+    flex-shrink: 0;
   }
 
   .copyright {

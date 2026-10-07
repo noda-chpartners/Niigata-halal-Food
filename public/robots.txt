@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://niigata-halal-food.pages.dev/sitemap-index.xml

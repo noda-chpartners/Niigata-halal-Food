@@ -1,17 +1,26 @@
 ---
-const infoItems = [
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+
+import qrCode from '../assets/IMG_4904.jpg';
+import { snsLinks } from '../data/sns';
+
+type InfoItem =
+  | { label: string; value: string; href?: string }
+  | { label: string; lines: string[] }
+  | { label: string; lunch: string; dinner: string };
+
+const infoItems: InfoItem[] = [
   { label: '店舗名', value: 'Niigata Halal Food And Restaurant' },
   { label: '電話番号', value: '070-2797-1885', href: 'tel:07027971885' },
-  { label: '住所', value: '〒950-0916 新潟市中央区米山4-21-18' },
+  { label: '住所', lines: ['〒950-0916', '新潟市中央区米山4-21-18 2F'] },
   {
     label: '営業時間（平日）',
-    isHours: true,
     lunch: 'ランチ：11:00～15:00',
     dinner: 'ディナー：17:00～22:00',
   },
   {
     label: '営業時間（土日祝）',
-    isHours: true,
     lunch: 'ランチ：11:00～15:00',
     dinner: 'ディナー：17:00～22:30',
   },
@@ -30,9 +39,11 @@ const infoItems = [
         <div class={`info-item fade-in fade-in-delay-${Math.min(index + 1, 4)}`}>
           <dt class="info-label">{item.label}</dt>
           <dd class="info-value">
-            {item.href ? (
+            {'href' in item && item.href ? (
               <a href={item.href} class="info-link">{item.value}</a>
-            ) : item.isHours ? (
+            ) : 'lines' in item ? (
+              item.lines.map((line) => <span class="info-line">{line}</span>)
+            ) : 'lunch' in item ? (
               <span class="info-hours">
                 <span class="info-hours-lunch">{item.lunch}</span>
                 <span class="info-hours-dinner">{item.dinner}</span>
@@ -44,6 +55,25 @@ const infoItems = [
         </div>
       ))}
     </dl>
+    <div class="info-extra fade-in fade-in-delay-3">
+      <div class="qr-block">
+        <p class="info-label">QRコード</p>
+        <Image class="qr-img" src={qrCode} alt="店舗のQRコード" format="png" />
+      </div>
+      <div class="sns-block">
+        <p class="info-label">SNS</p>
+        <ul class="sns-list">
+          {snsLinks.map((link) => (
+            <li>
+              <a class="sns-link" href={link.href} target="_blank" rel="noopener noreferrer">
+                <Icon class="sns-icon" name={link.icon} aria-hidden="true" />
+                <span>{link.label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
     <div class="map-wrap fade-in fade-in-delay-4" id="access">
       <iframe
         class="map-iframe"
@@ -97,6 +127,10 @@ const infoItems = [
     line-height: 1.6;
   }
 
+  .info-line {
+    display: block;
+  }
+
   .info-link {
     @include link-underline;
     transition: color $transition-fast;
@@ -117,6 +151,56 @@ const infoItems = [
 
   .info-hours-dinner {
     padding-left: 1.0em;
+  }
+
+  .info-extra {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40.0px;
+    align-items: flex-start;
+  }
+
+  .qr-block,
+  .sns-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16.0px;
+    padding-top: 20.0px;
+    padding-left: 20.0px;
+    border-left: 3.0px solid $color-primary;
+  }
+
+  .qr-img {
+    width: 180.0px;
+    height: auto;
+    object-fit: contain;
+    background-color: $color-white;
+  }
+
+  .sns-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16.0px;
+  }
+
+  .sns-link {
+    @include link-underline;
+    display: inline-flex;
+    align-items: center;
+    gap: 12.0px;
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    letter-spacing: 0.05em;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+
+  .sns-icon {
+    width: 28.0px;
+    height: 28.0px;
+    flex-shrink: 0;
   }
 
   @media (max-width: 581px) {
@@ -151,9 +235,15 @@ const infoItems = [
   }
 
   @include mobile {
-    .info-item {
+    .info-item,
+    .qr-block,
+    .sns-block {
       padding-top: 16.0px;
       padding-left: 16.0px;
+    }
+
+    .qr-img {
+      width: 150.0px;
     }
 
     .map-iframe {

@@ -1,24 +1,35 @@
 ---
 import { Image } from 'astro:assets';
 
-import item01 from '../assets/item01.png';
-import item02 from '../assets/item02.png';
-import item03 from '../assets/item03.png';
-import item04 from '../assets/item04.png';
-import item05 from '../assets/item05.png';
+import dinnerSet from '../assets/IMG_4911.jpg';
+import curry from '../assets/IMG_4912.jpg';
+import tandoori from '../assets/IMG_4913.jpg';
+import salad from '../assets/IMG_4907.jpg';
+import nanRice from '../assets/IMG_4908.jpg';
+import dessert from '../assets/IMG_4910.jpg';
 
-const menuItems = [item01, item02, item03, item04, item05];
+const menuItems = [
+  { src: dinnerSet, alt: 'ディナーセット' },
+  { src: curry, alt: 'チキンカレー・マトンカレー' },
+  { src: tandoori, alt: 'タンドーリ' },
+  { src: salad, alt: 'サラダ' },
+  { src: nanRice, alt: 'ナン・ライス・ピクルス' },
+  { src: dessert, alt: 'デザート' },
+];
 ---
 
 <section class="section menu-section" id="menu">
   <div class="section-inner">
     <div class="section-title fade-in">
       <h2 class="title">MENU</h2>
+      <p class="menu-lead">
+        新潟市中央区米山のハラルレストランです。チキンカレー、マトンカレー、タンドーリ、ナン、サラダ、デザートをご用意しています。
+      </p>
     </div>
     <div class="menu-list">
       {menuItems.map((item, index) => (
-        <div class={`menu-item fade-in fade-in-delay-${index + 1}`}>
-          <Image class="menu-item-img" src={item} alt="" />
+        <div class={`menu-item fade-in fade-in-delay-${Math.min(index + 1, 5)}`}>
+          <Image class="menu-item-img" src={item.src} alt={item.alt} />
         </div>
       ))}
     </div>
@@ -35,6 +46,15 @@ const menuItems = [item01, item02, item03, item04, item05];
 
   .menu-section {
     background-color: $color-text-light;
+  }
+
+  .menu-lead {
+    max-width: 40em;
+    padding-top: 16.0px;
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+    color: $color-text;
   }
 
   .menu-list {
