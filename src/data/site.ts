@@ -5,7 +5,7 @@ export const siteName = 'Niigata Halal Food And Restaurant';
 export const siteTitle = '新潟市中央区のハラルレストラン | Niigata Halal Food';
 
 export const siteDescription =
-  '新潟市中央区米山2階のハラルレストラン。チキンカレー、マトンカレー、タンドーリ、ナンをランチ・ディナーで提供。定休日は火曜日。ご予約は070-2797-1885。';
+  '新潟市中央区米山2階のハラルレストラン。カレー、タンドーリ、ナンを提供し、窓際のテーブル席と個室があります。定休日は火曜日。予約は070-2797-1885。';
 
 const weekday = ['Monday', 'Wednesday', 'Thursday', 'Friday'];
 const weekend = ['Saturday', 'Sunday'];
@@ -29,6 +29,12 @@ export const restaurantJsonLd = {
   telephone: '+817027971885',
   servesCuisine: ['Halal', 'Bangladeshi', 'Indian'],
   acceptsReservations: true,
+  hasMenu: `${siteOrigin}/#menu`,
+  amenityFeature: [
+    { '@type': 'LocationFeatureSpecification', name: '個室', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'テーブル席', value: true },
+    { '@type': 'LocationFeatureSpecification', name: '席数', value: '26' },
+  ],
   address: {
     '@type': 'PostalAddress',
     streetAddress: '米山4-21-18 2F',
