@@ -5,9 +5,9 @@ export const siteName = 'Niigata Halal Food And Restaurant';
 export const siteTitle = '新潟市中央区のハラルレストラン | Niigata Halal Food';
 
 export const siteDescription =
-  '新潟市中央区米山2階のハラルレストラン。カレー、タンドーリ、ナンを提供し、窓際のテーブル席と個室があります。定休日は火曜日。予約は070-2797-1885。';
+  '新潟市中央区米山2階のハラルレストラン。カレー、タンドーリ、ナンを提供し、窓際のテーブル席と個室があります。定休日なし。予約は070-2797-1885。';
 
-const weekday = ['Monday', 'Wednesday', 'Thursday', 'Friday'];
+const weekday = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const weekend = ['Saturday', 'Sunday'];
 
 function openingHours(days: string[], opens: string, closes: string) {
